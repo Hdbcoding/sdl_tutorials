@@ -1,0 +1,1 @@
+Learning about sdl, going through lazyfoo's lessons
