@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(SDL_Tutorials VERSION 1.0)
+project(SDLLesson0 VERSION 1.0)
 
 add_library(tutorial_compiler_flags INTERFACE)
 target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_17)
@@ -12,5 +12,10 @@ target_compile_options(tutorial_compiler_flags INTERFACE
     "$<{msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../../findsdl/")
+
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
+
+add_executable(SDLLesson0 lesson0.cxx)
+target_link_libraries(SDLLesson0 ${SDL2_LIBRARIES})
