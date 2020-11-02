@@ -8,7 +8,7 @@ target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_17)
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU>")
 set(msvc_cxx "<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(tutorial_compiler_flags INTERFACE
-    "$<{gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
+    "$<{gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused;-lmingw32;-lSDL2main;-lSDL2>>"
     "$<{msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
