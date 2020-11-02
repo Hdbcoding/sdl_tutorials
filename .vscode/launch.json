@@ -5,7 +5,7 @@
             "name": "(gdb) debug project",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/build/${fileBasenameNoExtension}.exe",
+            "program": "${fileDirname}/debug/${fileBasenameNoExtension}.exe",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
