@@ -13,6 +13,8 @@ target_compile_options(tutorial_compiler_flags INTERFACE
 )
 
 set(SDL2_PATH "C:\\SDL2\\SDL2-2.0.12\\i686-w64-mingw32")
+# i shouldn't need to copy this by hand, should I?
+file(COPY "C:\\SDL2\\SDL2-2.0.12\\i686-w64-mingw32\\bin\\SDL2.dll" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../../findsdl/")
 
