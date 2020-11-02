@@ -5,8 +5,6 @@ project(lesson0 VERSION 1.0)
 add_library(tutorial_compiler_flags INTERFACE)
 target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_17)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ADDITIONAL_CFLAGS} -g")
-
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU>")
 set(msvc_cxx "<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(tutorial_compiler_flags INTERFACE
