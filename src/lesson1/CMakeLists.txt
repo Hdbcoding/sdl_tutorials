@@ -21,5 +21,5 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../../findsdl/")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(lesson0 lesson0.cxx)
-target_link_libraries(lesson0 ${SDL2_LIBRARY})
+add_executable(lesson1 lesson1.cxx)
+target_link_libraries(lesson1 ${SDL2_LIBRARY})
