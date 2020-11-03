@@ -3,11 +3,11 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "make debug dir",
+            "label": "make bin",
             "command": "cmd",
             "args": [
                 "/C",
-                "if not exist ${fileDirname}\\debug mkdir ${fileDirname}\\debug"
+                "if not exist ${workspaceRoot}\\bin mkdir ${workspaceRoot}\\bin"
             ],
             "problemMatcher": []
         },
@@ -16,16 +16,16 @@
             "label": "cmake prepare build debug",
             "command": "cmake",
             "args": [
-                "${fileDirname}",
+                "${workspaceRoot}\\src",
                 "-G",
                 "MinGW Makefiles",
                 "-DCMAKE_BUILD_TYPE=Debug"
             ],
             "dependsOn": [
-                "make debug dir"
+                "make bin"
             ],
             "options": {
-                "cwd": "${fileDirname}/debug"
+                "cwd": "${workspaceRoot}\\bin"
             },
             "problemMatcher": []
         },
@@ -41,7 +41,7 @@
                 "cmake prepare build debug"
             ],
             "options": {
-                "cwd": "${fileDirname}/debug"
+                "cwd": "${workspaceRoot}\\bin"
             },
             "problemMatcher": []
         }
