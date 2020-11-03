@@ -29,8 +29,10 @@ int main(int, char**)
         return 1;
     }
 
-    // load bitmap image into "surface"
+    // todo - load bitmap image into "surface"
 
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
     SDL_Quit();
     
     return 0;
