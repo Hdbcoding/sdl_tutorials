@@ -1,3 +1,6 @@
 {
-    "C_Cpp.default.includePath": ["C:\\SDL2\\SDL2-2.0.12\\i686-w64-mingw32\\include\\SDL2\\"]
+    "C_Cpp.default.includePath": [
+        "C:\\SDL2\\SDL2-2.0.12\\i686-w64-mingw32\\include\\SDL2\\",
+        "G:\\Personal_Projects\\SDL_Tutorials\\src\\include\\"
+    ]
 }
