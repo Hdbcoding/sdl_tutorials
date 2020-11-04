@@ -33,7 +33,7 @@ int main(int, char **)
         return 1;
     }
 
-    // todo - load bitmap image into "surface"
+    // load bitmap image into "surface"
     std::string imagePath = getResourceDirectory() + "hello.bmp";
     SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
     if (bmp == nullptr)
@@ -45,6 +45,33 @@ int main(int, char **)
         return 1;
     }
 
+    // create texture from surface
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
+    SDL_FreeSurface(bmp);
+    if (tex == nullptr)
+    {
+        SDL_DestroyRenderer(ren);
+        SDL_DestroyWindow(win);
+        std::cout << "SDL_CreateTextureFromSurface error: " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
+
+    // "rendering loop"
+    for (int i = 0; i < 3; ++i)
+    {
+        // clear window
+        SDL_RenderClear(ren);
+        // draw texture
+        SDL_RenderCopy(ren, tex, NULL, NULL);
+        // update screen
+        SDL_RenderPresent(ren);
+        // sleep
+        SDL_Delay(1000);
+    }
+
+    // cleanup
+    SDL_DestroyTexture(tex);
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();

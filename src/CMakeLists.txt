@@ -15,8 +15,6 @@ target_compile_options(tutorial_compiler_flags INTERFACE
 
 # setting the install location of sdl2 for findsdl
 set(SDL2_PATH "C:\\SDL2\\SDL2-2.0.12\\i686-w64-mingw32")
-# copying images and such
-file(COPY "${CMAKE_SOURCE_DIR}/resources" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # to locate findsdl modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")

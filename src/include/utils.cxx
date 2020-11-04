@@ -13,6 +13,7 @@ std::string getRootDirectory()
         {
             baseRes = bp;
             SDL_free(bp);
+            std::cout << "Found base path: " << baseRes << std::endl;
         }
         else
         {
@@ -30,6 +31,7 @@ std::string getResourceDirectory(){
 
         size_t position = baseRes.rfind("bin");
         baseRes = baseRes.substr(0, position) + "resources" + PATH_SEP;
+        std::cout << "Found resource path: " << baseRes << std::endl;
     }
     return baseRes;
 }
