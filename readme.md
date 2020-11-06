@@ -1,1 +1,1 @@
-Learning about sdl, going through lazyfoo's lessons
+Learning about sdl, going through will usher's and lazyfoo's lessons

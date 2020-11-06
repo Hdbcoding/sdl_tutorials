@@ -25,9 +25,9 @@ include_directories(include)
 
 if(WIN32)
     # there should be a better way to do this... right?
-    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\lesson0")
-    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\lesson1")
+    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\wu_lesson0")
+    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\wu_lesson1")
 endif()
 
-add_subdirectory(lesson0)
-add_subdirectory(lesson1)
+add_subdirectory(wu_lesson0)
+add_subdirectory(wu_lesson1)
