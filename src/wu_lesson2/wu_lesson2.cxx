@@ -15,6 +15,12 @@ void logSDLError(std::ostream &os, const std::string &msg)
     os << msg << " error: " << SDL_GetError() << std::endl;
 }
 
+/**
+ * Load a texture from resources to a given renderer
+ * @param fileName Name of the file in the resources folder
+ * @param ren SDL_Renderer to load the texture onto
+ * @return the loaded texture
+ */
 SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
 {
     SDL_Texture *texture{nullptr};
@@ -36,6 +42,21 @@ SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
     return texture;
 }
 
+/**
+ * Draw an sdl_texture to an sdl_renderer at position x, y
+ * @param tex Texture to draw
+ * @param ren Renderer to draw the loaded texture
+ * @param x x coord
+ * @param y y coord
+ */
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
+    SDL_Rect dst;
+    dst.x = x;
+    dst.y = y;
+    SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+    SDL_RenderCopy(ren, tex, NULL, &dst);
+}
+
 int main(int, char **)
 {
     // Initialize SDL
@@ -46,7 +67,7 @@ int main(int, char **)
     }
 
     // create a window
-    SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (win == nullptr)
     {
         logSDLError(std::cout, "SDL_CreateWindow");
