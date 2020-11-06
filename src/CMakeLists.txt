@@ -23,11 +23,10 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(include)
 
-if(WIN32)
-    # there should be a better way to do this... right?
-    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\wu_lesson0")
-    file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\wu_lesson1")
-endif()
-
-add_subdirectory(wu_lesson0)
-add_subdirectory(wu_lesson1)
+set(project_list wu_lesson0 wu_lesson1 wu_lesson2)
+foreach(proj IN LISTS project_list)
+    add_subdirectory(${proj})
+    if (WIN32)
+        file(COPY "${SDL2_PATH}\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\${proj}")
+    endif()
+endforeach(proj)
