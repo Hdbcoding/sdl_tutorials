@@ -23,7 +23,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(include)
 
-set(project_list wu_lesson0 wu_lesson1 wu_lesson2)
+set(project_list wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3)
 foreach(proj IN LISTS project_list)
     add_subdirectory(${proj})
     if (WIN32)
