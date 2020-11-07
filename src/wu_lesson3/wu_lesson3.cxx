@@ -1,5 +1,6 @@
-#include <SDL.h>
 #include <iostream>
+#include "SDL.h"
+#include "SDL_image.h"
 #include "utils.hxx"
 
 const int SCREEN_WIDTH = 640;
@@ -23,23 +24,11 @@ void logSDLError(std::ostream &os, const std::string &msg)
  */
 SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
 {
-    SDL_Texture *texture{nullptr};
-    
     std::string path{getResourceDirectory() + filename};
-    SDL_Surface *bmp = SDL_LoadBMP(path.c_str());
-    if (bmp == nullptr)
-    {
-        logSDLError(std::cout, "SDL_LoadBMP");
-    }
-    else
-    {
-        texture = SDL_CreateTextureFromSurface(ren, bmp);
-        cleanup(bmp);
-        if (texture == nullptr){
-            logSDLError(std::cout, "SDL_CreateTextureFromSurface");
-        }
-    }
-    return texture;
+    SDL_Texture *tex{IMG_LoadTexture(ren, path.c_str())};
+    if (tex == nullptr)
+        logSDLError(std::cout, "IMG_LoadTexture");
+    return tex;
 }
 
 /**
@@ -49,7 +38,8 @@ SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
  * @param x x coord
  * @param y y coord
  */
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y)
+{
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
@@ -62,11 +52,14 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
  * @param tex Texture to draw
  * @param ren Renderer to draw the texture to
  */
-void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren){
+void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren)
+{
     int bw, bh;
     SDL_QueryTexture(tex, NULL, NULL, &bw, &bh);
-    for (int x = 0; x < SCREEN_WIDTH; x += bw){
-        for (int y = 0; y < SCREEN_HEIGHT; y += bh){
+    for (int x = 0; x < SCREEN_WIDTH; x += bw)
+    {
+        for (int y = 0; y < SCREEN_HEIGHT; y += bh)
+        {
             renderTexture(tex, ren, x, y);
         }
     }
@@ -77,7 +70,8 @@ void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren){
  * @param tex Texture to draw
  * @param ren Renderer to draw the texture to
  */
-void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren){
+void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
+{
     int iw, ih;
     SDL_QueryTexture(tex, NULL, NULL, &iw, &ih);
     int x{SCREEN_WIDTH / 2 - iw / 2};

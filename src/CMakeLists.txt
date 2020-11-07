@@ -21,9 +21,11 @@ set(SDL2_IMAGE_PATH "C:\\SDL2\\SDL2_image-2.0.5")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(SDL2 REQUIRED)
-find_package(SDL2_IMAGE REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 include_directories(include)
+
+find_package(SDL2_IMAGE REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 set(project_list wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3)
 foreach(proj IN LISTS project_list)
