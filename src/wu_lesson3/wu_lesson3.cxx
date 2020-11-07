@@ -151,7 +151,7 @@ int main(int, char **)
 
     // load bitmap image into "surface"
     SDL_Texture *background = loadTexture("tile.bmp", ren);
-    SDL_Texture *face = loadTexture("face.bmp", ren);
+    SDL_Texture *face = loadTexture("spooky.png", ren);
     if (background == nullptr || face == nullptr)
     {
         cleanup(ren, win);
