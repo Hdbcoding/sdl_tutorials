@@ -3,5 +3,5 @@ add_executable(wu_lesson3
     wu_lesson3.cxx
     "${CMAKE_SOURCE_DIR}/include/utils.cxx"
 )
-target_link_libraries(wu_lesson3 ${SDL2_LIBRARY})
+target_link_libraries(wu_lesson3 ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 install(TARGETS wu_lesson3 RUNTIME DESTINATION ${BIN_DIR})

@@ -30,9 +30,23 @@ foreach(proj IN LISTS project_list)
     add_subdirectory(${proj})
     if (WIN32)
         if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-            file(COPY "${SDL2_PATH}\\x86_64-w64-mingw32\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\${proj}")
+            file(COPY 
+                "${SDL2_PATH}\\x86_64-w64-mingw32\\bin\\SDL2.dll"
+                "${SDL2_IMAGE_PATH}\\x86_64-w64-mingw32\\bin\\SDL2_image.dll}"
+                "${SDL2_IMAGE_PATH}\\x86_64-w64-mingw32\\bin\\libpng16-16.dll}"
+                "${SDL2_IMAGE_PATH}\\x86_64-w64-mingw32\\bin\\zlib1.dll}" 
+                DESTINATION 
+                "${CMAKE_CURRENT_BINARY_DIR}\\${proj}"
+            )
         else()
-            file(COPY "${SDL2_PATH}\\i686-w64-mingw32\\bin\\SDL2.dll" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}\\${proj}")
+            file(COPY 
+                "${SDL2_PATH}\\i686-w64-mingw32\\bin\\SDL2.dll"
+                "${SDL2_IMAGE_PATH}\\i686-w64-mingw32\\bin\\SDL2_image.dll"
+                "${SDL2_IMAGE_PATH}\\i686-w64-mingw32\\bin\\libpng16-16.dll"
+                "${SDL2_IMAGE_PATH}\\i686-w64-mingw32\\bin\\zlib1.dll" 
+                DESTINATION 
+                "${CMAKE_CURRENT_BINARY_DIR}\\${proj}"
+            )
         endif()
     endif()
 endforeach(proj)
