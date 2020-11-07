@@ -57,6 +57,24 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
     SDL_RenderCopy(ren, tex, NULL, &dst);
 }
 
+void renderTiledBackground(SDL_Texture *background, SDL_Renderer *ren){
+    int bw, bh;
+    SDL_QueryTexture(background, NULL, NULL, &bw, &bh);
+    for (int x = 0; x < SCREEN_WIDTH; x += bw){
+        for (int y = 0; y < SCREEN_HEIGHT; y += bh){
+            renderTexture(background, ren, x, y);
+        }
+    }
+}
+
+void renderCenteredTexture(SDL_Texture *image, SDL_Renderer *ren){
+    int iw, ih;
+    SDL_QueryTexture(image, NULL, NULL, &iw, &ih);
+    int x{SCREEN_WIDTH / 2 - iw / 2};
+    int y{SCREEN_HEIGHT / 2 - ih / 2};
+    renderTexture(image, ren, x, y);
+}
+
 int main(int, char **)
 {
     // Initialize SDL
@@ -86,8 +104,9 @@ int main(int, char **)
     }
 
     // load bitmap image into "surface"
-    SDL_Texture *tex = loadTexture("hello.bmp", ren);
-    if (tex == nullptr)
+    SDL_Texture *background = loadTexture("tile.bmp", ren);
+    SDL_Texture *face = loadTexture("face.bmp", ren);
+    if (background == nullptr || face == nullptr)
     {
         cleanup(ren, win);
         SDL_Quit();
@@ -99,8 +118,10 @@ int main(int, char **)
     {
         // clear window
         SDL_RenderClear(ren);
+        // draw background
+        renderTiledBackground(background, ren);
         // draw texture
-        SDL_RenderCopy(ren, tex, NULL, NULL);
+        renderCenteredTexture(face, ren);
         // update screen
         SDL_RenderPresent(ren);
         // sleep
@@ -108,7 +129,7 @@ int main(int, char **)
     }
 
     // cleanup
-    cleanup(tex, ren, win);
+    cleanup(background, face, ren, win);
     SDL_Quit();
 
     return 0;
