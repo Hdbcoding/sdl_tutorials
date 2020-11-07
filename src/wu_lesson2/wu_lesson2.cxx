@@ -57,22 +57,32 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
     SDL_RenderCopy(ren, tex, NULL, &dst);
 }
 
-void renderTiledBackground(SDL_Texture *background, SDL_Renderer *ren){
+/**
+ * Draw a texture tiled across the entire window
+ * @param tex Texture to draw
+ * @param ren Renderer to draw the texture to
+ */
+void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren){
     int bw, bh;
-    SDL_QueryTexture(background, NULL, NULL, &bw, &bh);
+    SDL_QueryTexture(tex, NULL, NULL, &bw, &bh);
     for (int x = 0; x < SCREEN_WIDTH; x += bw){
         for (int y = 0; y < SCREEN_HEIGHT; y += bh){
-            renderTexture(background, ren, x, y);
+            renderTexture(tex, ren, x, y);
         }
     }
 }
 
-void renderCenteredTexture(SDL_Texture *image, SDL_Renderer *ren){
+/**
+ * Draw a texture centered in the window
+ * @param tex Texture to draw
+ * @param ren Renderer to draw the texture to
+ */
+void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren){
     int iw, ih;
-    SDL_QueryTexture(image, NULL, NULL, &iw, &ih);
+    SDL_QueryTexture(tex, NULL, NULL, &iw, &ih);
     int x{SCREEN_WIDTH / 2 - iw / 2};
     int y{SCREEN_HEIGHT / 2 - ih / 2};
-    renderTexture(image, ren, x, y);
+    renderTexture(tex, ren, x, y);
 }
 
 int main(int, char **)
