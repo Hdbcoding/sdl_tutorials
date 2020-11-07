@@ -48,19 +48,37 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y)
 }
 
 /**
+ * Draw an sdl_texture to an sdl_renderer at position x, y
+ * @param tex Texture to draw
+ * @param ren Renderer to draw the loaded texture
+ * @param x x coord
+ * @param y y coord
+ * @param w width
+ * @param h height
+ */
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h)
+{
+    SDL_Rect dst;
+    dst.x = x;
+    dst.y = y;
+    dst.w = w;
+    dst.h = h;
+    SDL_RenderCopy(ren, tex, NULL, &dst);
+}
+
+/**
  * Draw a texture tiled across the entire window
  * @param tex Texture to draw
  * @param ren Renderer to draw the texture to
  */
 void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren)
 {
-    int bw, bh;
-    SDL_QueryTexture(tex, NULL, NULL, &bw, &bh);
-    for (int x = 0; x < SCREEN_WIDTH; x += bw)
+    const int tile{50};
+    for (int x = 0; x < SCREEN_WIDTH; x += tile)
     {
-        for (int y = 0; y < SCREEN_HEIGHT; y += bh)
+        for (int y = 0; y < SCREEN_HEIGHT; y += tile)
         {
-            renderTexture(tex, ren, x, y);
+            renderTexture(tex, ren, x, y, tile, tile);
         }
     }
 }
@@ -77,6 +95,30 @@ void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
     int x{SCREEN_WIDTH / 2 - iw / 2};
     int y{SCREEN_HEIGHT / 2 - ih / 2};
     renderTexture(tex, ren, x, y);
+}
+
+/**
+ * Render a background and image in a loop
+ * @param ren Renderer
+ * @param background Background tiled image
+ * @param image Foreground image
+ */
+void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
+{
+    // "rendering loop"
+    for (int i = 0; i < 3; ++i)
+    {
+        // clear window
+        SDL_RenderClear(ren);
+        // draw background
+        renderTiledBackground(background, ren);
+        // draw texture
+        renderCenteredTexture(image, ren);
+        // update screen
+        SDL_RenderPresent(ren);
+        // sleep
+        SDL_Delay(1000);
+    }
 }
 
 int main(int, char **)
@@ -117,20 +159,7 @@ int main(int, char **)
         return 1;
     }
 
-    // "rendering loop"
-    for (int i = 0; i < 3; ++i)
-    {
-        // clear window
-        SDL_RenderClear(ren);
-        // draw background
-        renderTiledBackground(background, ren);
-        // draw texture
-        renderCenteredTexture(face, ren);
-        // update screen
-        SDL_RenderPresent(ren);
-        // sleep
-        SDL_Delay(1000);
-    }
+    renderLoop(ren, background, face);
 
     // cleanup
     cleanup(background, face, ren, win);
