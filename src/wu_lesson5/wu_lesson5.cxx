@@ -32,19 +32,40 @@ SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
 }
 
 /**
+ * Draw an SDL texture to an SDL Renderer
+ * @param tex Texture to draw
+ * @param ren Renderer to draw the loaded texture
+ * @param dst destination to draw the texture to
+ * @param clip subsection of the texture to draw
+ */
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip = nullptr)
+{
+    SDL_RenderCopy(ren, tex, clip, &dst);
+}
+
+/**
  * Draw an sdl_texture to an sdl_renderer at position x, y
  * @param tex Texture to draw
  * @param ren Renderer to draw the loaded texture
  * @param x x coord
  * @param y y coord
+ * @param clip subsection of the texture to draw
  */
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y)
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip = nullptr)
 {
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
-    SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
-    SDL_RenderCopy(ren, tex, NULL, &dst);
+    if (clip != nullptr)
+    {
+        dst.w = clip->w;
+        dst.h = clip->h;
+    }
+    else
+    {
+        SDL_QueryTexture(tex, NULL, NULL, &dst.w, &dst.h);
+    }
+    renderTexture(tex, ren, dst, clip);
 }
 
 /**
@@ -63,7 +84,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
     dst.y = y;
     dst.w = w;
     dst.h = h;
-    SDL_RenderCopy(ren, tex, NULL, &dst);
+    renderTexture(tex, ren, dst);
 }
 
 /**
@@ -106,12 +127,49 @@ void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
 void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
 {
     SDL_Event e;
+    int useClip = 0;
+    int iw, ih;
+    SDL_QueryTexture(image, NULL, NULL, &iw, &ih);
+    SDL_Rect clips[4];
+    for (int i = 0; i < 4; ++i)
+    {
+        clips[i].x = i / 2 * iw / 2;
+        clips[i].y = i % 2 * ih / 2;
+        clips[i].w = iw / 2;
+        clips[i].h = ih / 2;
+    }
+    int x{SCREEN_WIDTH / 2 - iw / 4};
+    int y{SCREEN_HEIGHT / 2 - ih / 4};
+
     while (true)
     {
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
                 goto endOfRender;
+            if (e.type == SDL_KEYDOWN)
+            {
+                switch (e.key.keysym.sym)
+                {
+                case SDLK_1:
+                    useClip = 0;
+                    break;
+                case SDLK_2:
+                    useClip = 1;
+                    break;
+                case SDLK_3:
+                    useClip = 2;
+                    break;
+                case SDLK_4:
+                    useClip = 3;
+                    break;
+                case SDLK_ESCAPE:
+                    goto endOfRender;
+                    break;
+                default:
+                    break;
+                }
+            }
         }
 
         // clear window
@@ -119,7 +177,7 @@ void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
         // draw background
         renderTiledBackground(background, ren);
         // draw texture
-        renderCenteredTexture(image, ren);
+        renderTexture(image, ren, x, y, &clips[useClip]);
         // update screen
         SDL_RenderPresent(ren);
     }
@@ -156,7 +214,7 @@ int main(int, char **)
 
     // load bitmap image into "surface"
     SDL_Texture *background = loadTexture("tile.bmp", ren);
-    SDL_Texture *face = loadTexture("spooky.png", ren);
+    SDL_Texture *face = loadTexture("sheet.png", ren);
     if (background == nullptr || face == nullptr)
     {
         cleanup(ren, win);
