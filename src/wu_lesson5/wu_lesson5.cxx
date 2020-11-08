@@ -118,6 +118,21 @@ void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
     renderTexture(tex, ren, x, y);
 }
 
+SDL_Rect *buildClippingMap(SDL_Texture *tex)
+{
+    SDL_Rect *clips = new SDL_Rect[4];
+    int iw, ih;
+    SDL_QueryTexture(tex, NULL, NULL, &iw, &ih);
+    for (int i = 0; i < 4; ++i)
+    {
+        clips[i].x = i / 2 * iw / 2;
+        clips[i].y = i % 2 * ih / 2;
+        clips[i].w = iw / 2;
+        clips[i].h = ih / 2;
+    }
+    return clips;
+}
+
 /**
  * Render a background and image in a loop
  * @param ren Renderer
@@ -128,18 +143,9 @@ void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
 {
     SDL_Event e;
     int useClip = 0;
-    int iw, ih;
-    SDL_QueryTexture(image, NULL, NULL, &iw, &ih);
-    SDL_Rect clips[4];
-    for (int i = 0; i < 4; ++i)
-    {
-        clips[i].x = i / 2 * iw / 2;
-        clips[i].y = i % 2 * ih / 2;
-        clips[i].w = iw / 2;
-        clips[i].h = ih / 2;
-    }
-    int x{SCREEN_WIDTH / 2 - iw / 4};
-    int y{SCREEN_HEIGHT / 2 - ih / 4};
+    SDL_Rect *clips = buildClippingMap(image);
+    int x{SCREEN_WIDTH / 2 - clips[0].w / 2};
+    int y{SCREEN_HEIGHT / 2 - clips[0].h / 2};
 
     while (true)
     {
@@ -181,7 +187,8 @@ void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
         // update screen
         SDL_RenderPresent(ren);
     }
-endOfRender:;
+endOfRender:
+    delete[] clips;
 }
 
 int main(int, char **)
