@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 #include "utils.hxx"
 
 const int SCREEN_WIDTH = 640;
@@ -118,6 +119,11 @@ void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
     renderTexture(tex, ren, x, y);
 }
 
+/**
+ * Build a clipping map for a desired texture. Assumes 4 equal sized portions in a 2x2 grid
+ * @param tex Texture to divide into a clipping map
+ * @return Array of rects that describe the 4 clips
+ */
 SDL_Rect *buildClippingMap(SDL_Texture *tex)
 {
     SDL_Rect *clips = new SDL_Rect[4];
@@ -134,12 +140,52 @@ SDL_Rect *buildClippingMap(SDL_Texture *tex)
 }
 
 /**
+ * Render text using a given font name, color, and size
+ * @param message The text to render
+ * @param fontFileName Name of the font to use when rendering text
+ * @param color Desired color for the text
+ * @param fontSize Desired size of the text
+ * @param ren Renderer to draw the texture
+ * @return Texture with the rendered text
+ */
+SDL_Texture *renderText(const std::string &message, const std::string &fontFileName, SDL_Color color, int fontSize, SDL_Renderer *ren)
+{
+    std::string path{getResourceDirectory() + fontFileName};
+    // get the font
+    TTF_Font *font = TTF_OpenFont(path.c_str(), fontSize);
+    if (font == nullptr)
+    {
+        logSDLError(std::cout, "TTF_OpenFont");
+        return nullptr;
+    }
+
+    // render the text onto an surface
+    SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
+    if (surf == nullptr)
+    {
+        TTF_CloseFont(font);
+        logSDLError(std::cout, "TTF_RenderText");
+    }
+
+    // load the surface onto a texture
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
+    if (tex == nullptr)
+    {
+        logSDLError(std::cout, "SDL_CreateTextureFromSurface");
+    }
+    SDL_FreeSurface(surf);
+    TTF_CloseFont(font);
+    return tex;
+}
+
+/**
  * Render a background and image in a loop
  * @param ren Renderer
  * @param background Background tiled image
  * @param image Foreground image
+ * @param text Text texture
  */
-void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
+void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image, SDL_Texture *text)
 {
     SDL_Event e;
     int useClip = 0;
@@ -184,6 +230,8 @@ void renderLoop(SDL_Renderer *ren, SDL_Texture *background, SDL_Texture *image)
         renderTiledBackground(background, ren);
         // draw texture
         renderTexture(image, ren, x, y, &clips[useClip]);
+        // draw some text
+        renderCenteredTexture(text, ren);
         // update screen
         SDL_RenderPresent(ren);
     }
@@ -197,6 +245,12 @@ int main(int, char **)
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         logSDLError(std::cout, "SDL_Init");
+        return 1;
+    }
+
+    if (TTF_Init() != 0){
+        logSDLError(std::cout, "TTF_Init");
+        SDL_Quit();
         return 1;
     }
 
@@ -222,17 +276,19 @@ int main(int, char **)
     // load bitmap image into "surface"
     SDL_Texture *background = loadTexture("tile.bmp", ren);
     SDL_Texture *face = loadTexture("sheet.png", ren);
-    if (background == nullptr || face == nullptr)
+    SDL_Color color{255, 255, 255, 255};
+    SDL_Texture *text = renderText("whattt upppppp", "roboto/roboto-regular.ttf", color, 64, ren);
+    if (background == nullptr || face == nullptr || text == nullptr)
     {
         cleanup(ren, win);
         SDL_Quit();
         return 1;
     }
 
-    renderLoop(ren, background, face);
+    renderLoop(ren, background, face, text);
 
     // cleanup
-    cleanup(background, face, ren, win);
+    cleanup(background, face, text, ren, win);
     SDL_Quit();
 
     return 0;
