@@ -54,3 +54,14 @@ void logSDLError(const std::string &message)
 {
     logSDLError(std::cout, message);
 }
+
+SDL_Surface *loadBMP(std::string filename)
+{
+    std::string path{getResourceDirectory() + "hello2.bmp"};
+    SDL_Surface *image = SDL_LoadBMP(path.c_str());
+    if (image == nullptr)
+    {
+        logSDLError("SDL_LoadBMP");
+    }
+    return image;
+}

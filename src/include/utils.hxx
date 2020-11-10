@@ -17,6 +17,8 @@ void logSDLError(const std::string &message);
 
 void logSDLError(std::ostream &out, const std::string &message);
 
+SDL_Surface* loadBMP(std::string filename);
+
 template<typename T, typename ... Args>
 void cleanup(T *t, Args&& ... args){
     cleanup(t);

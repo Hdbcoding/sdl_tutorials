@@ -25,11 +25,9 @@ int main(int, char **)
     SDL_Surface *surf = SDL_GetWindowSurface(win);
 
     // load an image
-    std::string path{getResourceDirectory() + "hello2.bmp"};
-    SDL_Surface *image = SDL_LoadBMP(path.c_str());
+    SDL_Surface *image = loadBMP("hello2.bmp");
     if (image == nullptr)
     {
-        logSDLError("SDL_LoadBMP");
         cleanup(win);
         SDL_Quit();
         return 1;
