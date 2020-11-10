@@ -126,20 +126,18 @@ int main(int, char **)
     }
 
     // create a window
-    SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window *win = createWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     if (win == nullptr)
     {
-        logSDLError("SDL_CreateWindow");
         SDL_Quit();
         return 1;
     }
 
     // create a renderer which can draw to the window
-    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *ren = createRenderer(win);
     if (ren == nullptr)
     {
         cleanup(win);
-        logSDLError("SDL_CreateRenderer");
         SDL_Quit();
         return 1;
     }

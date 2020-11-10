@@ -14,18 +14,13 @@ const int SCREEN_HEIGHT = 480;
 SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
 {
     SDL_Texture *texture{nullptr};
-    
-    std::string path{getResourceDirectory() + filename};
-    SDL_Surface *bmp = SDL_LoadBMP(path.c_str());
-    if (bmp == nullptr)
-    {
-        logSDLError("SDL_LoadBMP");
-    }
-    else
+    SDL_Surface *bmp = loadBMP(filename);
+    if (bmp != nullptr)
     {
         texture = SDL_CreateTextureFromSurface(ren, bmp);
         cleanup(bmp);
-        if (texture == nullptr){
+        if (texture == nullptr)
+        {
             logSDLError("SDL_CreateTextureFromSurface");
         }
     }
@@ -39,7 +34,8 @@ SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
  * @param x x coord
  * @param y y coord
  */
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y)
+{
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
@@ -52,11 +48,14 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y){
  * @param tex Texture to draw
  * @param ren Renderer to draw the texture to
  */
-void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren){
+void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren)
+{
     int bw, bh;
     SDL_QueryTexture(tex, NULL, NULL, &bw, &bh);
-    for (int x = 0; x < SCREEN_WIDTH; x += bw){
-        for (int y = 0; y < SCREEN_HEIGHT; y += bh){
+    for (int x = 0; x < SCREEN_WIDTH; x += bw)
+    {
+        for (int y = 0; y < SCREEN_HEIGHT; y += bh)
+        {
             renderTexture(tex, ren, x, y);
         }
     }
@@ -67,7 +66,8 @@ void renderTiledBackground(SDL_Texture *tex, SDL_Renderer *ren){
  * @param tex Texture to draw
  * @param ren Renderer to draw the texture to
  */
-void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren){
+void renderCenteredTexture(SDL_Texture *tex, SDL_Renderer *ren)
+{
     int iw, ih;
     SDL_QueryTexture(tex, NULL, NULL, &iw, &ih);
     int x{SCREEN_WIDTH / 2 - iw / 2};
@@ -85,20 +85,18 @@ int main(int, char **)
     }
 
     // create a window
-    SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window *win = createWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     if (win == nullptr)
     {
-        logSDLError("SDL_CreateWindow");
         SDL_Quit();
         return 1;
     }
 
     // create a renderer which can draw to the window
-    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *ren = createRenderer(win);
     if (ren == nullptr)
     {
         cleanup(win);
-        logSDLError("SDL_CreateRenderer");
         SDL_Quit();
         return 1;
     }

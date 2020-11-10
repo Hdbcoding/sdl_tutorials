@@ -1,15 +1,14 @@
-#include <SDL.h>
 #include <iostream>
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+#include "SDL.h"
+#include "utils.hxx"
 
 int main(int, char**)
 {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        std::cout << "SDL Init error: " << SDL_GetError() << std::endl;
-        return 0;
+        logSDLError("SDL_Init");
+        return 1;
     }
 
     SDL_Quit();

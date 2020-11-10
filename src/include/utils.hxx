@@ -17,7 +17,9 @@ void logSDLError(const std::string &message);
 
 void logSDLError(std::ostream &out, const std::string &message);
 
-SDL_Window *createWindow(int width, int height, std::string name = "Tutorial");
+SDL_Window* createWindow(int width, int height, std::string name = "Tutorial");
+
+SDL_Renderer *createRenderer(SDL_Window *win);
 
 SDL_Surface* loadBMP(std::string filename);
 
