@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <iostream>
 #include "SDL.h"
 
 #ifdef _WIN32
@@ -12,6 +12,10 @@ const char PATH_SEP = '/';
 std::string getRootDirectory();
 
 std::string getResourceDirectory();
+
+void logSDLError(const std::string &message);
+
+void logSDLError(std::ostream &out, const std::string &message);
 
 template<typename T, typename ... Args>
 void cleanup(T *t, Args&& ... args){

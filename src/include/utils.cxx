@@ -1,6 +1,5 @@
-#include <string>
 #include <iostream>
-#include <SDL.h>
+#include "SDL.h"
 #include "utils.hxx"
 
 std::string getRootDirectory()
@@ -24,9 +23,11 @@ std::string getRootDirectory()
     return baseRes;
 }
 
-std::string getResourceDirectory(){
+std::string getResourceDirectory()
+{
     static std::string baseRes;
-    if (baseRes.empty()){
+    if (baseRes.empty())
+    {
         baseRes = getRootDirectory();
 
         size_t position = baseRes.rfind("bin");
@@ -34,4 +35,22 @@ std::string getResourceDirectory(){
         std::cout << "Found resource path: " << baseRes << std::endl;
     }
     return baseRes;
+}
+
+/**
+ * Log an SDL error to an output stream
+ * @param os Output stream to write to
+ * @param msg Message to write
+ */
+void logSDLError(std::ostream &out, const std::string &message)
+{
+    out << message << " error: " << SDL_GetError() << std::endl;
+}
+
+/**
+ * Log an SDL error to the standard output stream
+ */
+void logSDLError(const std::string &message)
+{
+    logSDLError(std::cout, message);
 }

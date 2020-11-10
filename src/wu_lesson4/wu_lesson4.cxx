@@ -7,16 +7,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 /**
- * Log an SDL error to an output stream
- * @param os Output stream to write to
- * @param msg Message to write
- */
-void logSDLError(std::ostream &os, const std::string &msg)
-{
-    os << msg << " error: " << SDL_GetError() << std::endl;
-}
-
-/**
  * Load a texture from resources to a given renderer
  * @param fileName Name of the file in the resources folder
  * @param ren SDL_Renderer to load the texture onto
@@ -27,7 +17,7 @@ SDL_Texture *loadTexture(const std::string &filename, SDL_Renderer *ren)
     std::string path{getResourceDirectory() + filename};
     SDL_Texture *tex{IMG_LoadTexture(ren, path.c_str())};
     if (tex == nullptr)
-        logSDLError(std::cout, "IMG_LoadTexture");
+        logSDLError("IMG_LoadTexture");
     return tex;
 }
 
@@ -131,7 +121,7 @@ int main(int, char **)
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        logSDLError(std::cout, "SDL_Init");
+        logSDLError("SDL_Init");
         return 1;
     }
 
@@ -139,7 +129,7 @@ int main(int, char **)
     SDL_Window *win = SDL_CreateWindow("Hello world!", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (win == nullptr)
     {
-        logSDLError(std::cout, "SDL_CreateWindow");
+        logSDLError("SDL_CreateWindow");
         SDL_Quit();
         return 1;
     }
@@ -149,7 +139,7 @@ int main(int, char **)
     if (ren == nullptr)
     {
         cleanup(win);
-        logSDLError(std::cout, "SDL_CreateRenderer");
+        logSDLError("SDL_CreateRenderer");
         SDL_Quit();
         return 1;
     }
