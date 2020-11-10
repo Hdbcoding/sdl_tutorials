@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SDL.h"
+#include "utils.hxx"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -33,9 +34,19 @@ int main(int, char **)
     // get the surface of the window
     SDL_Surface *surf = SDL_GetWindowSurface(win);
 
-    // draw a rect on the surface
-    Uint32 color = SDL_MapRGB(surf->format, 0x12, 0x93, 0xF2);
-    SDL_FillRect(surf, nullptr, color);
+    // load an image
+    std::string path{getResourceDirectory() + "hello2.bmp"};
+    SDL_Surface *image = SDL_LoadBMP(path.c_str());
+    if (image == nullptr)
+    {
+        logSDLError(std::cout, "SDL_LoadBMP");
+        cleanup(win);
+        SDL_Quit();
+        return 1;
+    }
+
+    // render the image onto the window's surface
+    SDL_BlitSurface(image, nullptr, surf, nullptr);
 
     // update the surface
     SDL_UpdateWindowSurface(win);
@@ -43,8 +54,8 @@ int main(int, char **)
     // arbitrary wait
     SDL_Delay(3000);
 
-    // cleanup window
-    SDL_DestroyWindow(win);
+    // cleanup
+    cleanup(image, win);
 
     // close SDL
     SDL_Quit();

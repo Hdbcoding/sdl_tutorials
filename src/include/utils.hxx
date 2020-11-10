@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "SDL.h"
 
 #ifdef _WIN32
 const char PATH_SEP = '\\';
