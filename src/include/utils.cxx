@@ -55,6 +55,15 @@ void logSDLError(const std::string &message)
     logSDLError(std::cout, message);
 }
 
+SDL_Window* createWindow(int width, int height, std::string name){
+    SDL_Window *win = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+    if (win == nullptr)
+    {
+        logSDLError("SDL_CreateWindow");
+    }
+    return win;
+}
+
 SDL_Surface *loadBMP(std::string filename)
 {
     std::string path{getResourceDirectory() + "hello2.bmp"};

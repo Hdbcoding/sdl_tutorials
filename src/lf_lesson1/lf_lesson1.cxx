@@ -13,10 +13,9 @@ int main(int, char **)
         return 1;
     }
 
-    SDL_Window *win = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window *win = createWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     if (win == nullptr)
     {
-        logSDLError("SDL_CreateWindow");
         SDL_Quit();
         return 1;
     }

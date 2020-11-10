@@ -4,4 +4,4 @@ add_executable(lf_lesson1
     "${CMAKE_SOURCE_DIR}/include/utils.cxx"
 )
 target_link_libraries(lf_lesson1 ${SDL2_LIBRARY})
-install(TARGETS lf_lesson1 DESTINATION ${BIN_DIR})
+install(TARGETS lf_lesson1 RUNTIME DESTINATION ${BIN_DIR})
