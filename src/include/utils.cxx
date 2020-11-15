@@ -73,7 +73,7 @@ SDL_Renderer *createRenderer(SDL_Window *win)
 
 SDL_Surface *loadBMP(std::string filename)
 {
-    std::string path{getResourceDirectory() + "hello2.bmp"};
+    std::string path{getResourceDirectory() + filename};
     SDL_Surface *image = SDL_LoadBMP(path.c_str());
     if (image == nullptr)
         logSDLError("SDL_LoadBMP");
