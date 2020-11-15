@@ -71,11 +71,32 @@ SDL_Renderer *createRenderer(SDL_Window *win)
     return ren;
 }
 
-SDL_Surface *loadBMP(std::string filename)
+SDL_Surface *loadBMP(const std::string &filename)
 {
     std::string path{getResourceDirectory() + filename};
     SDL_Surface *image = SDL_LoadBMP(path.c_str());
     if (image == nullptr)
         logSDLError("SDL_LoadBMP");
     return image;
+}
+
+SDL_Surface *loadOptimizedBMP(const std::string &filename, const SDL_Surface *source)
+{
+    std::string path{getResourceDirectory() + filename};
+    SDL_Surface *image = SDL_LoadBMP(path.c_str());
+    SDL_Surface *optimized{nullptr};
+    if (image == nullptr)
+    {
+        logSDLError("SDL_LoadBMP");
+    }
+    else
+    {
+        optimized = SDL_ConvertSurface(image, source->format, 0);
+        if (optimized == nullptr)
+        {
+            logSDLError("SDL_ConvertSurface");
+        }
+        SDL_FreeSurface(image);
+    }
+    return optimized;
 }

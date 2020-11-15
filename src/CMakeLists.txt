@@ -31,7 +31,7 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 find_package(SDL2_TTF REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})
 
-set(project_list wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3 wu_lesson4 wu_lesson5 wu_lesson6 lf_lesson1 lf_lesson2 lf_lesson3 lf_lesson4)
+set(project_list wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3 wu_lesson4 wu_lesson5 wu_lesson6 lf_lesson1 lf_lesson2 lf_lesson3 lf_lesson4 lf_lesson5)
 foreach(proj IN LISTS project_list)
     add_subdirectory(${proj})
     if (WIN32)
