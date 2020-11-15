@@ -31,18 +31,14 @@ void cleanupSurfaces(SDL_Surface *surfaces[], int size)
     }
 }
 
-void selectSurface(SDL_Keycode key, SDL_Surface *surfaces[], SDL_Surface **current)
+SDL_Surface* selectSurface(SDL_Keycode key, SDL_Surface *surfaces[])
 {
     static const std::unordered_map<SDL_Keycode, int> inputMap{{SDLK_UP, 1}, {SDLK_DOWN, 2}, {SDLK_LEFT, 3}, {SDLK_RIGHT, 4}};
     std::unordered_map<SDL_Keycode, int>::const_iterator got = inputMap.find(key);
     if (got == inputMap.end())
-    {
-        current = &surfaces[0];
-    }
+        return surfaces[0];
     else
-    {
-        current = &surfaces[got->second];
-    }
+        return surfaces[got->second];
 }
 
 int main(int, char **)
@@ -79,7 +75,7 @@ int main(int, char **)
     {
         input.poll();
 
-        selectSurface(input.getLastKey(), surfaces, &current);
+        current = selectSurface(input.getLastKey(), surfaces);
 
         // render the image onto the window's surface
         SDL_BlitSurface(current, nullptr, surf, nullptr);
