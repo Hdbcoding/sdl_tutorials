@@ -80,16 +80,11 @@ SDL_Surface *loadBMP(const std::string &filename)
     return image;
 }
 
-SDL_Surface *loadOptimizedBMP(const std::string &filename, const SDL_Surface *source)
+SDL_Surface *loadBMPOptimized(const std::string &filename, const SDL_Surface *source)
 {
-    std::string path{getResourceDirectory() + filename};
-    SDL_Surface *image = SDL_LoadBMP(path.c_str());
+    SDL_Surface *image = loadBMP(filename);
     SDL_Surface *optimized{nullptr};
-    if (image == nullptr)
-    {
-        logSDLError("SDL_LoadBMP");
-    }
-    else
+    if (image != nullptr)
     {
         optimized = SDL_ConvertSurface(image, source->format, 0);
         if (optimized == nullptr)

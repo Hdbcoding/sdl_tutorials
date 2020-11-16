@@ -23,7 +23,7 @@ SDL_Renderer *createRenderer(SDL_Window *win);
 
 SDL_Surface* loadBMP(const std::string &filename);
 
-SDL_Surface* loadOptimizedBMP(const std::string &filename, const SDL_Surface *source);
+SDL_Surface* loadBMPOptimized(const std::string &filename, const SDL_Surface *source);
 
 template<typename T, typename ... Args>
 void cleanup(T *t, Args&& ... args){

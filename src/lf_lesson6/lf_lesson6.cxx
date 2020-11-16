@@ -1,7 +1,9 @@
 #include <iostream>
 #include <unordered_map>
 #include "SDL.h"
+#include "SDL_image.h"
 #include "utils.hxx"
+#include "imgUtils.hxx"
 #include "input.hxx"
 
 const int SCREEN_WIDTH = 640;
@@ -15,6 +17,14 @@ int main(int, char **)
         return 1;
     }
 
+    int imgFlags = IMG_INIT_PNG;
+    int initted = IMG_Init(imgFlags);
+    if ((initted & imgFlags) != imgFlags)
+    {
+        logSDLError("IMG_Init");
+        return 1;
+    }
+
     SDL_Window *win = createWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     if (win == nullptr)
     {
@@ -25,7 +35,7 @@ int main(int, char **)
     // get the surface of the window
     SDL_Surface *surf = SDL_GetWindowSurface(win);
 
-    SDL_Surface *image = loadBMPOptimized("hello2.bmp", surf);
+    SDL_Surface *image = loadImageOptimized("spooky.png", surf);
 
     if (image == nullptr)
     {
