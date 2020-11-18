@@ -1,9 +1,5 @@
-#include <iostream>
-#include <unordered_map>
 #include "SDL.h"
-#include "SDL_image.h"
 #include "utils.hxx"
-#include "imgUtils.hxx"
 #include "input.hxx"
 
 const int SCREEN_WIDTH = 640;
