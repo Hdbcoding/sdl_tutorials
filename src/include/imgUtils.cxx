@@ -2,6 +2,16 @@
 #include "SDL_image.h"
 #include "utils.hxx"
 
+int initIMGPng()
+{
+    int imgFlags = IMG_INIT_PNG;
+    int initted = IMG_Init(imgFlags);
+    bool success = (initted & imgFlags) == imgFlags;
+    if (!success)
+        logSDLError("IMG_Init");
+    return success;
+}
+
 SDL_Surface *loadImage(const std::string &filename)
 {
     std::string path{getResourceDirectory() + filename};

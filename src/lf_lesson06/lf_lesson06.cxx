@@ -1,5 +1,3 @@
-#include <iostream>
-#include <unordered_map>
 #include "SDL.h"
 #include "SDL_image.h"
 #include "utils.hxx"
@@ -17,13 +15,8 @@ int main(int, char **)
         return 1;
     }
 
-    int imgFlags = IMG_INIT_PNG;
-    int initted = IMG_Init(imgFlags);
-    if ((initted & imgFlags) != imgFlags)
-    {
-        logSDLError("IMG_Init");
+    if (!initIMGPng())
         return 1;
-    }
 
     SDL_Window *win = createWindow(SCREEN_WIDTH, SCREEN_HEIGHT);
     if (win == nullptr)

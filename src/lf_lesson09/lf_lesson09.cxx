@@ -26,11 +26,11 @@ int main(int, char **)
     }
 
     SDL_Renderer *ren = createRenderer(win);
-    if (ren == nullptr) {
+    if (ren == nullptr)
+    {
         cleanup(win);
         return false;
     }
-    SDL_SetRenderDrawColor(ren, 0xFF, 0xFF, 0xFF, 0xFF);
 
     SDL_Texture *image = loadImageTexture("spooky.png", ren);
     if (image == nullptr)
@@ -40,16 +40,23 @@ int main(int, char **)
         return 1;
     }
 
+    SDL_Rect topLeft{0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+    SDL_Rect topRight{SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+    SDL_Rect bottom{0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2};
+
     Input input;
     while (!input.didQuit())
     {
         input.poll();
 
-        // clear the screen
-        SDL_RenderClear(ren);
+        SDL_RenderSetViewport(ren, &topLeft);
+        SDL_RenderCopy(ren, image, nullptr, nullptr);
 
-        // render the current texture
-        SDL_RenderCopy(ren, image, NULL, NULL);
+        SDL_RenderSetViewport(ren, &topRight);
+        SDL_RenderCopy(ren, image, nullptr, nullptr);
+
+        SDL_RenderSetViewport(ren, &bottom);
+        SDL_RenderCopy(ren, image, nullptr, nullptr);
 
         // update the screen
         SDL_RenderPresent(ren);
@@ -59,7 +66,6 @@ int main(int, char **)
     cleanup(image, ren, win);
 
     // close SDL
-    IMG_Quit();
     SDL_Quit();
 
     return 0;
