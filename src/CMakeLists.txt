@@ -33,7 +33,7 @@ include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 set(project_list 
     wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3 wu_lesson4 wu_lesson5 wu_lesson6 
-    lf_lesson1 lf_lesson2 lf_lesson3 lf_lesson4 lf_lesson5 lf_lesson6 lf_lesson7
+    lf_lesson01 lf_lesson02 lf_lesson03 lf_lesson04 lf_lesson05 lf_lesson06 lf_lesson07
 )
 foreach(proj IN LISTS project_list)
     add_subdirectory(${proj})
