@@ -1,10 +1,8 @@
 project(lf_lesson10)
 add_executable(lf_lesson10
     lf_lesson10.cxx
-    LTexture.cxx
-    LTexture.hxx
-    RenderingContext.cxx
-    RenderingContext.hxx
+    "${CMAKE_SOURCE_DIR}/include/LTexture.cxx"
+    "${CMAKE_SOURCE_DIR}/include/RenderingContext.cxx"
     "${CMAKE_SOURCE_DIR}/include/utils.cxx"
     "${CMAKE_SOURCE_DIR}/include/imgUtils.cxx"
     "${CMAKE_SOURCE_DIR}/include/input.cxx"
