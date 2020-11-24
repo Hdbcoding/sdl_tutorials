@@ -25,7 +25,9 @@ bool LTexture::loadFromFile(const std::string &filename, SDL_Renderer *ren)
         return false;
 
     // assume cyan color key for opacity
-    SDL_SetColorKey(surf, SDL_TRUE, SDL_MapRGB(surf->format, 0, 0xFF, 0xFF));
+    Uint32 key = SDL_MapRGB(surf->format, 0, 0xFF, 0xFF);
+    SDL_SetColorKey(surf, SDL_TRUE, key);
+    
     this->texture = SDL_CreateTextureFromSurface(ren, surf);
     cleanup(surf);
     if (this->texture == nullptr)

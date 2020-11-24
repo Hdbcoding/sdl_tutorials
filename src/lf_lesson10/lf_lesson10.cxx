@@ -17,7 +17,7 @@ int main(int, char **)
         return 1;
 
     LTexture character;
-    if (!character.loadFromFile("spooky.png", context.ren))
+    if (!character.loadFromFile("dude.png", context.ren))
         return 1;
 
     Input input;
