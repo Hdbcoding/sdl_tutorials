@@ -27,7 +27,7 @@ bool LTexture::loadFromFile(const std::string &filename, SDL_Renderer *ren)
     // assume cyan color key for opacity
     Uint32 key = SDL_MapRGB(surf->format, 0, 0xFF, 0xFF);
     SDL_SetColorKey(surf, SDL_TRUE, key);
-    
+
     this->texture = SDL_CreateTextureFromSurface(ren, surf);
     cleanup(surf);
     if (this->texture == nullptr)
@@ -39,18 +39,25 @@ bool LTexture::loadFromFile(const std::string &filename, SDL_Renderer *ren)
     return this->texture != nullptr;
 }
 
-void LTexture::render(SDL_Renderer *ren, int x, int y)
+void LTexture::render(SDL_Renderer *ren, int x, int y, SDL_Rect *clip)
 {
     SDL_Rect quad{x, y, this->width, this->height};
-    SDL_RenderCopy(ren, this->texture, nullptr, &quad);
+
+    if (clip != nullptr)
+    {
+        quad.w = clip->w;
+        quad.h = clip->h;
+    }
+
+    SDL_RenderCopy(ren, this->texture, clip, &quad);
 }
 
-int LTexture::getWidth()
+const int LTexture::getWidth() const
 {
     return this->width;
 }
 
-int LTexture::getHeight()
+const int LTexture::getHeight() const
 {
     return this->height;
 }

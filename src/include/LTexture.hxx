@@ -11,7 +11,7 @@ public:
 
     bool loadFromFile(const std::string &filename, SDL_Renderer *ren);
     void free();
-    void render(SDL_Renderer *ren, int x, int y);
-    int getWidth();
-    int getHeight();
+    void render(SDL_Renderer *ren, int x, int y, SDL_Rect * clip = nullptr);
+    const int getWidth() const;
+    const int getHeight() const;
 };
