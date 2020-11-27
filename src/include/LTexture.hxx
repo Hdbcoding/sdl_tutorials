@@ -14,4 +14,5 @@ public:
     void render(SDL_Renderer *ren, int x, int y, SDL_Rect * clip = nullptr);
     const int getWidth() const;
     const int getHeight() const;
+    void setColorModulation(Uint8 r, Uint8 g, Uint8 b);
 };

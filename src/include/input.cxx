@@ -15,12 +15,17 @@ void Input::poll()
     }
 }
 
-const bool Input::didQuit()
+const bool Input::didQuit() const
 {
     return this->quit;
 }
 
-const int Input::getLastKey()
+const SDL_Keycode Input::getLastKey() const
 {
     return this->lastKey;
+}
+
+void Input::clearLastKey()
+{
+    this->lastKey = SDLK_UNKNOWN;
 }

@@ -61,3 +61,8 @@ const int LTexture::getHeight() const
 {
     return this->height;
 }
+
+void LTexture::setColorModulation(Uint8 r, Uint8 g, Uint8 b)
+{
+    SDL_SetTextureColorMod(this->texture, r, g, b);
+}
