@@ -2,6 +2,16 @@
 #include "SDL_ttf.h"
 #include "utils.hxx"
 
+bool initTTF()
+{
+    if (TTF_Init() != 0)
+    {
+        logSDLError("TTF_Init");
+        return false;
+    }
+    return true;
+}
+
 TTF_Font *loadFont(const std::string &filename, int fontSize)
 {
     std::string path{getResourceDirectory() + filename};
@@ -11,7 +21,8 @@ TTF_Font *loadFont(const std::string &filename, int fontSize)
     return font;
 }
 
-SDL_Surface *loadText(const std::string &text, SDL_Color color, TTF_Font *font){
+SDL_Surface *loadText(const std::string &text, SDL_Color color, TTF_Font *font)
+{
     SDL_Surface *surf = TTF_RenderText_Solid(font, text.c_str(), color);
     if (surf == nullptr)
         logSDLError("TTF_RenderText_Solid");
