@@ -11,6 +11,7 @@ void LFont::free()
     if (this->font != nullptr)
     {
         cleanup(this->font);
+        this->font = nullptr;
     }
 }
 

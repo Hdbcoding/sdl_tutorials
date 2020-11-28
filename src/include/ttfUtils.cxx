@@ -40,3 +40,10 @@ SDL_Texture *loadText(const std::string &text, SDL_Color color, TTF_Font *font, 
 
     return texture;
 }
+
+void cleanup(TTF_Font *font)
+{
+    if (!font)
+        return;
+    TTF_CloseFont(font);
+}

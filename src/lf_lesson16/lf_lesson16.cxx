@@ -41,5 +41,10 @@ int main(int, char **)
         SDL_RenderPresent(context.ren);
     }
 
+    // some missing cleanup
+    text.free();
+    font.free();
+    TTF_Quit();
+
     return 0;
 }
