@@ -13,6 +13,7 @@ int main(int, char **)
     if (!context.startup())
         return 1;
 
+    // todo -  a class to wrap ttf init?
     if (!initTTF())
         return 1;
 

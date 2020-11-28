@@ -12,18 +12,22 @@ RenderingContext::~RenderingContext()
 void RenderingContext::free()
 {
     cleanup(this->ren, this->win);
+    this->ren = nullptr;
+    this->win = nullptr;
     IMG_Quit();
     SDL_Quit();
 }
 
 bool RenderingContext::startup()
 {
+    // todo - sdl init management to its own class?
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         logSDLError("SDL_Init");
         return false;
     }
 
+    // todo - img init management to its own class?
     if (!initIMGPng())
         return false;
 
