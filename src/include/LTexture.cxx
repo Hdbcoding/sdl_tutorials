@@ -49,7 +49,7 @@ void LTexture::render(SDL_Renderer *ren, int x, int y, SDL_Rect *clip)
         quad.h = clip->h;
     }
 
-    SDL_RenderCopy(ren, this->texture, clip, &quad);
+    SDL_RenderCopyEx(ren, this->texture, clip, &quad, this->rotation, nullptr, this->flipType);
 }
 
 const int LTexture::getWidth() const
@@ -75,4 +75,14 @@ void LTexture::setBlendMode(SDL_BlendMode blending)
 void LTexture::setAlpha(Uint8 alpha)
 {
     SDL_SetTextureAlphaMod(this->texture, alpha);
+}
+
+void LTexture::setRotation(double rotation)
+{
+    this->rotation = rotation;
+}
+
+void LTexture::setFlip(SDL_RendererFlip flip)
+{
+    this->flipType = flip;
 }

@@ -6,6 +6,8 @@ class LTexture
     SDL_Texture *texture{nullptr};
     int width{0};
     int height{0};
+    double rotation{0};
+    SDL_RendererFlip flipType{SDL_FLIP_NONE};
 
 public:
     ~LTexture();
@@ -18,4 +20,6 @@ public:
     void setColorModulation(Uint8 r, Uint8 g, Uint8 b);
     void setBlendMode(SDL_BlendMode blending);
     void setAlpha(Uint8 alpha);
+    void setRotation(double rotation);
+    void setFlip(SDL_RendererFlip flip);
 };
