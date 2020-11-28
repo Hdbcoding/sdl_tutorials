@@ -95,3 +95,13 @@ SDL_Surface *loadBMPOptimized(const std::string &filename, const SDL_Surface *so
     }
     return optimized;
 }
+
+SDL_Texture *adaptSurface(SDL_Surface *surf, SDL_Renderer *ren)
+{
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
+
+    if (tex == nullptr)
+        logSDLError("SDL_CreateTextureFromSurface");
+
+    return tex;
+}

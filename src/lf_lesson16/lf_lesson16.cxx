@@ -5,11 +5,16 @@
 #include "input.hxx"
 #include "RenderingContext.hxx"
 #include "LTexture.hxx"
+#include "LFont.hxx"
 
 int main(int, char **)
 {
     RenderingContext context;
     if (!context.startup())
+        return 1;
+
+    LFont font;
+    if (!font.loadFromFile("roboto/Roboto-Regular.ttf", 16))
         return 1;
 
     LTexture arrow;

@@ -25,6 +25,8 @@ SDL_Surface *loadBMP(const std::string &filename);
 
 SDL_Surface *loadBMPOptimized(const std::string &filename, const SDL_Surface *source);
 
+SDL_Texture *adaptSurface(SDL_Surface *surf, SDL_Renderer *ren);
+
 template <typename T, typename... Args>
 void cleanup(T *t, Args &&... args)
 {

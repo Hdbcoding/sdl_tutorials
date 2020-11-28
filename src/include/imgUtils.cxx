@@ -39,17 +39,12 @@ SDL_Surface *loadImageOptimized(const std::string &filename, const SDL_Surface *
 
 SDL_Texture *loadImageTexture(const std::string &filename, SDL_Renderer *ren)
 {
-    SDL_Texture *tex = nullptr;
-
     SDL_Surface *surf = loadImage(filename);
     if (surf == nullptr)
-        return tex;
+        return nullptr;
 
-    tex = SDL_CreateTextureFromSurface(ren, surf);
+    SDL_Texture *tex = adaptSurface(surf, ren);
     cleanup(surf);
-
-    if (tex == nullptr)
-        logSDLError("SDL_CreateTextureFromSurface");
 
     return tex;
 }

@@ -23,14 +23,24 @@ void LTextTexture::free()
 bool LTextTexture::loadFromText(const std::string &text, SDL_Color color, LFont *font, SDL_Renderer *ren)
 {
     this->free();
-    this->text = loadText(text, color, font->font, ren);
-
+    SDL_Surface *surf = loadText(text, color, font->font);
+    if (surf != nullptr)
+    {
+        this->text = loadText(text, color, font->font, ren);
+        if (this->text != nullptr)
+        {
+            this->width = surf->w;
+            this->height = surf->h;
+        }
+        cleanup(surf);
+    }
     return this->text != nullptr;
 }
 
 void LTextTexture::render(SDL_Renderer *ren, int x, int y)
 {
-
+    SDL_Rect quad{x, y, this->width, this->height};
+    SDL_RenderCopy(ren, this->text, nullptr, &quad);
 }
 
 const int LTextTexture::getWidth() const
