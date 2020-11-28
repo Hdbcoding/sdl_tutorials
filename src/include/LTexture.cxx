@@ -29,12 +29,12 @@ bool LTexture::loadFromFile(const std::string &filename, SDL_Renderer *ren)
     SDL_SetColorKey(surf, SDL_TRUE, key);
 
     this->texture = SDL_CreateTextureFromSurface(ren, surf);
+    if (this->texture != nullptr)
+    {
+        this->width = surf->w;
+        this->height = surf->h;
+    }
     cleanup(surf);
-    if (this->texture == nullptr)
-        return false;
-
-    this->width = surf->w;
-    this->height = surf->h;
 
     return this->texture != nullptr;
 }

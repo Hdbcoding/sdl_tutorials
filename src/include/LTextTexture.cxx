@@ -1,6 +1,7 @@
 #include <string>
 #include "SDL.h"
 #include "utils.hxx"
+#include "ttfUtils.hxx"
 #include "LTextTexture.hxx"
 
 LTextTexture::~LTextTexture()
@@ -21,5 +22,23 @@ void LTextTexture::free()
 
 bool LTextTexture::loadFromText(const std::string &text, SDL_Color color, LFont *font, SDL_Renderer *ren)
 {
+    this->free();
+    this->text = loadText(text, color, font->font, ren);
 
+    return this->text != nullptr;
+}
+
+void LTextTexture::render(SDL_Renderer *ren, int x, int y)
+{
+
+}
+
+const int LTextTexture::getWidth() const
+{
+    return this->width;
+}
+
+const int LTextTexture::getHeight() const
+{
+    return this->height;
 }
