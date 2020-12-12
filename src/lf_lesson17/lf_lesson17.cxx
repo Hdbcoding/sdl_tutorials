@@ -12,7 +12,7 @@ int main(int, char **)
         return 1;
 
     LTexture tex;
-    if (!tex.loadFromFile("up.bmp", context.ren))
+    if (!tex.loadFromFile("buttons.bmp", context.ren))
         return 1;
 
     LButton b;
