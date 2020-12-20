@@ -18,10 +18,10 @@ void RenderingContext::free()
     SDL_Quit();
 }
 
-bool RenderingContext::startup()
+bool RenderingContext::startup(Uint32 flags)
 {
     // todo - sdl init management to its own class?
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) != 0)
+    if (SDL_Init(flags) != 0)
     {
         logSDLError("SDL_Init");
         return false;

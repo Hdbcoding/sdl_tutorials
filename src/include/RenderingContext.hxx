@@ -11,5 +11,5 @@ struct RenderingContext
 
     ~RenderingContext();
     void free();
-    bool startup();
+    bool startup(Uint32 flags = SDL_INIT_VIDEO);
 };

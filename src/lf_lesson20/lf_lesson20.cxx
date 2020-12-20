@@ -7,7 +7,7 @@
 int main(int, char **)
 {
     RenderingContext context;
-    if (!context.startup(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK))
+    if (!context.startup(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC))
         return 1;
 
     if (SDL_NumJoysticks() < 1)
@@ -24,6 +24,21 @@ int main(int, char **)
     if (controller == nullptr)
     {
         logSDLError("SDL_JoystickOpen");
+        return 1;
+    }
+
+    SDL_Haptic *haptic = SDL_HapticOpen(0);
+    if (haptic == nullptr)
+    {
+        logSDLError("SDL_HapticOpenFromJoystick");
+        SDL_JoystickClose(controller);
+        return 1;
+    }
+
+    if (SDL_HapticRumbleInit(haptic) < 0)
+    {
+        logSDLError("SDL_HapticRumbleInit");
+        SDL_JoystickClose(controller);
         return 1;
     }
 
@@ -50,6 +65,13 @@ int main(int, char **)
                 }
             }
         }
+        else if (e.type == SDL_JOYBUTTONDOWN)
+        {
+            if (SDL_HapticRumblePlay(haptic, 0.5, 500) != 0)
+            {
+                logSDLError("SDL_HapticRumblePlay");
+            }
+        }
 
         angle = SDL_atan2((double)x, (double)y) * (-180 / M_PI) + 180;
 
@@ -67,6 +89,7 @@ int main(int, char **)
         SDL_RenderPresent(context.ren);
     }
 
+    SDL_HapticClose(haptic);
     SDL_JoystickClose(controller);
 
     return 0;
