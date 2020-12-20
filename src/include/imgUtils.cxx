@@ -2,11 +2,10 @@
 #include "SDL_image.h"
 #include "utils.hxx"
 
-int initIMGPng()
+int initIMGPng(Uint32 flags)
 {
-    int imgFlags = IMG_INIT_PNG;
-    int initted = IMG_Init(imgFlags);
-    bool success = (initted & imgFlags) == imgFlags;
+    int initted = IMG_Init(flags);
+    bool success = (initted & flags) == flags;
     if (!success)
         logSDLError("IMG_Init");
     return success;

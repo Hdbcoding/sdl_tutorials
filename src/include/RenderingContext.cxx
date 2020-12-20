@@ -1,7 +1,5 @@
 #include "SDL.h"
-#include "SDL_image.h"
 #include "utils.hxx"
-#include "imgUtils.hxx"
 #include "RenderingContext.hxx"
 
 RenderingContext::~RenderingContext()
@@ -14,7 +12,6 @@ void RenderingContext::free()
     cleanup(this->ren, this->win);
     this->ren = nullptr;
     this->win = nullptr;
-    IMG_Quit();
     SDL_Quit();
 }
 
@@ -26,10 +23,6 @@ bool RenderingContext::startup(Uint32 flags)
         logSDLError("SDL_Init");
         return false;
     }
-
-    // todo - img init management to its own class?
-    if (!initIMGPng())
-        return false;
 
     this->win = createWindow(this->SCREEN_WIDTH, this->SCREEN_HEIGHT);
     if (this->win == nullptr)
