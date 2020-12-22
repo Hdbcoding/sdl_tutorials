@@ -17,6 +17,7 @@ target_compile_options(tutorial_compiler_flags INTERFACE
 set(SDL2_PATH "C:\\SDL2\\SDL2-2.0.12")
 set(SDL2_IMAGE_PATH "C:\\SDL2\\SDL2_image-2.0.5")
 set(SDL2_TTF_PATH "C:\\SDL2\\SDL2_ttf-2.0.15")
+set(SDL2_MIXER_PATH "C:\\SDL2\\SDL2_mixer-2.0.4")
 
 # to locate findsdl modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -30,6 +31,9 @@ include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 
 find_package(SDL2_TTF REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})
+
+find_package(SDL2_MIXER REQUIRED)
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
 
 set(project_list 
     wu_lesson0 wu_lesson1 wu_lesson2 wu_lesson3 wu_lesson4 wu_lesson5 wu_lesson6 
@@ -48,6 +52,7 @@ foreach(proj IN LISTS project_list)
                 "${SDL2_IMAGE_PATH}\\x86_64-w64-mingw32\\bin\\zlib1.dll"
                 "${SDL2_TTF_PATH}\\x86_64-w64-mingw32\\bin\\SDL2_ttf.dll"
                 "${SDL2_TTF_PATH}\\x86_64-w64-mingw32\\bin\\libfreetype-6.dll"
+                "${SDL2_MIXER_PATH}\\x86_64-w64-mingw32\\bin\\SDL2_mixer.dll"
                 DESTINATION 
                 "${CMAKE_CURRENT_BINARY_DIR}\\${proj}"
             )
@@ -59,6 +64,7 @@ foreach(proj IN LISTS project_list)
                 "${SDL2_IMAGE_PATH}\\i686-w64-mingw32\\bin\\zlib1.dll"
                 "${SDL2_TTF_PATH}\\i686-w64-mingw32\\bin\\SDL2_ttf.dll"
                 "${SDL2_TTF_PATH}\\i686-w64-mingw32\\bin\\libfreetype-6.dll"
+                "${SDL2_MIXER_PATH}\\i686-w64-mingw32\\bin\\SDL2_mixer.dll"
                 DESTINATION 
                 "${CMAKE_CURRENT_BINARY_DIR}\\${proj}"
             )
