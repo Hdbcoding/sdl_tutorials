@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 struct RenderingContext
 {
@@ -11,5 +12,5 @@ struct RenderingContext
 
     ~RenderingContext();
     void free();
-    bool startup(Uint32 flags = SDL_INIT_VIDEO);
+    bool startup(Uint32 sdlFlags = SDL_INIT_VIDEO, Uint32 imgFlags = IMG_INIT_PNG);
 };
